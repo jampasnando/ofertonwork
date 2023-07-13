@@ -1,0 +1,44 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 26" width="32" height="26">
+	<title>Proyecto nuevo</title>
+	<style>
+		.s0 { opacity: 1;fill: #ffffff } 
+		.s1 { opacity: .5;fill: #ffffff } 
+		.s2 { opacity: .8;fill: #ffffff } 
+		.s3 { opacity: .3;fill: #ffffff } 
+		.s4 { opacity: .9;fill: #ffffff } 
+		.s5 { opacity: .4;fill: #ffffff } 
+		.s6 { opacity: .6;fill: #ffffff } 
+		.s7 { opacity: .7;fill: #ffffff } 
+		.s8 { opacity: .2;fill: #ffffff } 
+	</style>
+	<g id="Capa 1">
+		<path id="Path 0" fill-rule="evenodd" class="s0" d="m26 2v-1h5v1zm-1 0h1v1h-1zm-21 2v-1h18v1zm20 0h1v1h-1zm-20 2h1v2h-1zm19 1h1v1h-1zm-18 3h1v2h-1zm3 1v-1h15v1zm13 2h1v1h-1zm-14 5v-1h12v1h-2l-1 1v1h-1v-1l-1-1zm-2 1h1v2h-1zm5 0h1v1h-1zm10 0h1v2h-1zm-10 2h1v1h-1zm5 0h1v1h-1zm-10 2l1-1h2v2h-4v-1zm4-1h1v1h-1zm7 0h1v1h-1zm2 1l1-1h1l1 1v1h-4v-1zm-17 1h1v1h-1zm23 0h1v1h-1z"/>
+		<path id="Path 1" class="s1" d="m25 3h1v1h-1zm-20 2v-1h17v1zm18 0h1v1h-1zm-16 2v-1h16v1h-1zm0 7v-1h13v1zm10 4h1v1h-1zm-3 2h1v1h-1zm0 2h1v1h-1zm-12 1h1v1h-1zm-2 1h1v1h-1zm21 0h1v1h-1z"/>
+		<path id="Path 2" class="s2" d="m7 8v-1h15v1zm0 7v-1h13v1zm12 1h1v1h-1zm1 2h1v1h-1zm-10 5l1-1h2v1l-1 1h-2zm-7 0h1v1h-1zm10 1v-1h1 1 1v1z"/>
+		<path id="Path 3" class="s3" d="m26 2h1v1h-1zm-18 8l14-1v1zm4 9v-1h2v1zm7 1h1v1h-1zm-5 1h1v1h-1zm-9 3h1v1h-1z"/>
+		<path id="Path 4" class="s0" d="m23 6h1v1h-1zm-1 3h1v1h-1zm-1 3h1v1h-1zm-1 3v-1h1v1 1h-1zm-1 3v-1h1v1 1h-1zm-9 0h1v1h-1zm0 2h1v1h-1zm7 0h1v1h-1zm-12 1h1v1h-1zm15 0h1v1h-1zm-12 1h1v1h-1zm10 0h1v1h-1z"/>
+		<path id="Path 5" class="s1" d="m24 6h1v1h-1zm-18 1h1v1h-1zm-1 1h1v1h-1zm18 1h1v1h-1zm-1 3h1v1h-1zm-17 1h1v1h-1zm2 6v-1h2v1h-1zm-2 3h1v1h-1zm18 1h1v1h-1z"/>
+		<path id="Path 6" class="s4" d="m3 4h1v1h-1zm21 1h1v1h-1zm-20 3h1v1h-1zm2 5h1v1h-1zm15 1h1v1h-1zm-13 9h1v1h-1zm8 0h1v1h-1zm7 1h1v1h-1z"/>
+		<path id="Path 7" class="s2" d="m22 7h1v1h-1zm-7 13h1v1h-1zm-6 3h1v1h-1zm-7 1h1v1h-1z"/>
+		<path id="Path 8" class="s5" d="m22 4h1v1h-1zm-19 2h1v1h-1zm18 9h1v1h-1zm-14 4h1v1h-1zm7 0h1v1h-1zm4 0h1v1h-1zm-7 1h1v1h-1zm-2 1h1v1h-1zm7 0h1v1h-1zm4 1h1v1h-1z"/>
+		<path id="Path 9" class="s6" d="m4 5h1v1h-1zm2 9h1v1h-1zm11 5h1v1h-1zm1 1h1v1h-1zm-12 1h1v1h-1zm7 1h1v1h-1zm9 1h1v1h-1z"/>
+		<path id="Path 10" class="s7" d="m3 5h1v1h-1zm17 8h1v1h-1zm-13 7h1v1h-1zm12 1h1v1h-1zm-9 1h1v1h-1zm12 2h1v1h-1z"/>
+		<path id="Path 11" class="s8" d="m31 1h1v1h-1zm-8 3h1v1h-1zm-18 3h1v1h-1zm1 13h1v1h-1z"/>
+		<path id="Path 12" class="s3" d="m4 10h1v1h-1zm2 1h1v1h-1zm0 8h1v1h-1zm5 0h1v1h-1zm8 0h1v1h-1zm-15 5h1v1h-1zm16 0h1v1h-1z"/>
+		<path id="Path 13" class="s1" d="m22 8h1v1h-1zm-18 1h1v1h-1zm17 2h1v1h-1zm-15 1h1v1h-1zm2 7h1v1h-1zm-5 5h1v1h-1z"/>
+		<path id="Path 14" class="s8" d="m27 1v-1h4v1zm-2 3h1v1h-1z"/>
+		<path id="Path 15" class="s3" d="m20 17h1v1h-1zm-9 1h1v1h-1zm7 0h1v1h-1z"/>
+		<path id="Path 16" class="s2" d="m24 3h1v1h-1zm-1 5h1v1h-1zm-1 3h1v1h-1zm-2 5h1v1h-1zm-14 2h1v1h-1zm3 0h1v1h-1zm6 4h1v1h-1zm6 1h1v1h-1z"/>
+		<path id="Path 17" class="s7" d="m4 4h1v1h-1zm1 5h1v1h-1zm0 3h1v1h-1z"/>
+		<path id="Path 18" class="s4" d="m8 20h1v1h-1zm9 2h1v1h-1z"/>
+		<path id="Path 19" class="s1" d="m25 1h1v1h-1z"/>
+		<path id="Path 20" class="s2" d="m16 18h1v1h-1z"/>
+		<path id="Path 21" class="s3" d="m24 2h1v1h-1zm-23 21h1v1h-1zm23 0h1v1h-1z"/>
+		<path id="Path 22" class="s1" d="m3 3h1v1h-1z"/>
+		<path id="Path 23" class="s4" d="m22 3h1v1h-1z"/>
+		<path id="Path 24" class="s6" d="m12 23h1v1h-1zm13 1h1v1h-1z"/>
+		<path id="Path 25" class="s7" d="m6 17h1v1h-1zm-1 1h1v1h-1z"/>
+		<path id="Path 26" class="s8" d="m6 6h1v1h-1zm1 4h1v1h-1zm11 6h1v1h-1zm-14 4h1v1h-1z"/>
+		<path id="Path 27" class="s3" d="m14 18h1v1h-1z"/>
+	</g>
+</svg>

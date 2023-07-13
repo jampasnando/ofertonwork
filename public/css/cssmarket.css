@@ -1,0 +1,77 @@
+.ancho{
+    width:80%;
+    margin: auto;
+}
+@media screen and (max-width:480px){
+    .ancho{
+        width:100%;
+        margin:auto;
+    }
+    .app{
+        display: flex;
+        justify-content: space-around;
+    }
+    .app img{
+        height: 2.3em;
+    }
+}
+.espacio{
+    height: 1em;
+}
+/* .carrito::before {
+    content: 'a';
+    position: absolute;
+    top: -0.5em;
+    right: 101px;
+    background: red;
+    border-radius: 20px 20px;
+    line-height: 10px;
+    font-size: 1.5em;
+    color: white;
+    padding: 0.5em;
+} */
+.carrito {
+    margin-right: 2em;
+    display: flex;
+    align-items: center;
+    background: forestgreen;
+    padding: 5px 6px;
+    border: 10px 10px;
+}
+.nroitemscarrito {
+    position: absolute;
+    top: -0.5em;
+    right: 101px;
+    background: red;
+    border-radius: 20px 20px;
+    line-height: 10px;
+    font-size: 1.5em;
+    color: white;
+    padding: 0.5em;
+}
+.xitemcarrito{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 0.5em;
+    font-weight: bold;
+    cursor:pointer;
+}
+.btncuantos{
+    font-weight: bold;
+    line-height: 1em;
+    padding: 0 0.5em;
+    font-size: 1.3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cantcarrito{
+    display: flex;
+    padding: 1em 0;
+    background: white;
+    width: 18em;
+}
+.app{
+
+}

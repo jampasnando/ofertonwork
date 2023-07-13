@@ -1,0 +1,33 @@
+.categorias{
+    text-align: center;
+    border:1px solid gray;
+}
+.caras{
+	text-align:center;
+	border:1px solid lightgray;
+}
+.carasos{
+    text-align:center;
+	border:1px solid lightgray;
+    background:lightcyan !important;
+}
+.marca{
+	border-left:1px solid lightgray;
+}
+.marcasos{
+    border-left:1px solid lightgray;
+    text-align: center;
+    background:lightcyan !important;
+}
+
+.total{
+    text-align: center;
+    background:lightgoldenrodyellow !important;
+}
+.totales{
+    text-align: center;
+    font-weight: bold;
+}
+.totales td{
+    border:1px solid lightgray;
+}

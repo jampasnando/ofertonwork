@@ -1,0 +1,184 @@
+.botonesheader{
+    display: flex;
+    justify-content: space-between;
+}
+.titulo{
+    display: flex;
+    font-weight: 600;
+    font-size: 1.5em;
+    margin-top: 6px;
+    white-space: nowrap;
+}
+.titulodetallecierre{
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 1.5em;
+    margin-top: 6px;
+}
+.deposito{
+    display: flex;
+}
+.botonesheader div:first-child form{
+    float: right;
+    margin-left: 0.10px;
+    padding-left: 15px;
+}
+.ancho{
+    width: 80%;
+    margin: auto;
+}
+.anchoservicios{
+    width: 95%;
+    margin: auto;
+}
+.anchosaldos{
+    width: 100%;
+}
+.nuevoprod{
+    width: 80%;
+    margin:auto;
+}
+nav a:hover{
+    background:silver;
+}
+.resultadobusq{
+    position: absolute;
+    top:39px;
+    width: 100%;
+    background: aliceblue;
+    padding: 0.5em;
+    cursor:pointer;
+    z-index: 100;
+}
+.resultadobusq2{
+    position: absolute;
+    display: none;
+    top:39px;
+    width: 100%;
+    background: lightyellow;
+    padding: 0.5em;
+    cursor:pointer;
+    z-index: 200;
+}
+.complementos{
+    background: #f4faff;
+    /* padding: 1em; */
+}
+.complementos input,.complementos select{
+    background: aliceblue;
+}
+#tb_cierrecaja tr:not(:last-child) td{
+    background:lightyellow;
+}
+/* #tb_vtasdetallada tr td:nth-child(13),#tb_vtasdetallada tr td:nth-child(14),#tb_cierrecaja tr td:nth-child(13),#tb_cierrecaja tr td:nth-child(14){
+    text-align: right;
+} */
+#tb_vtasdetallada tr td:nth-child(n+10), #tb_cierrecaja tr td:nth-child(n+11){
+    text-align: right;
+}
+#tb_vtasdetallada tr td:nth-child(6),#tb_vtasdetallada tr td:nth-child(7){
+    white-space: nowrap;
+}
+.coloreagris td{
+    background: gainsboro;
+}
+
+.coloreayellow td{
+    background: white;
+}
+.derecha{
+    position: absolute;
+    right: 5px;
+}
+.cabeceraventa{
+    background: aliceblue;
+    /* padding:1em 1em 0 1em; */
+}
+.totalesventadeldia{
+    width: 100%;
+    background: aliceblue;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+#tb_detallecompras td:last-child,#tb_detallecompras th:last-child{
+    text-align: right;
+}
+#divcredito{
+    display: flex;
+    justify-content: center ;
+}
+#tb_detallecomisionvendedor tr td:nth-child(n+7){
+    text-align: right;
+}
+#tb_deudas tr td:nth-child(3),#tb_deudas tr td:nth-child(4),#tb_deudas tr td:nth-child(5){
+    text-align:right;
+}
+#tb_deudas tr th:nth-child(3),#tb_deudas tr th:nth-child(4),#tb_deudas tr th:nth-child(5){
+    text-align:right;
+}
+#tb_deudas tr td:nth-child(5){
+    font-weight: bold;
+}
+#tb_sinvendedor tr td{
+    font-size:0.8em;
+}
+#tb_sinvendedor tr td:nth-child(4){
+    white-space: nowrap;
+}
+#tb_modifventa input,#tb_modifventa tr td:last-child{
+    text-align: right;
+}
+#tb_cajachica,.tb_totalcajachica{
+    width: 70%;
+    margin:auto;
+}
+.cajachica{
+    background: lightyellow;
+    padding:1em 3em;    
+}
+.comisionpagada td{
+    background: silver;
+}
+.reservas{
+    position: absolute;
+    right:3em;
+    top:10em;
+}
+.titres{
+    background:black;
+    color:white;
+}
+.titres h5{
+    font-size: 0.8em;
+    text-align: center;
+}
+.reservas table{
+    font-size: 0.7em;
+}
+.bordeparpadea{
+    border: 1px solid lightyellow;
+    animation: parpadea 1s infinite;
+    background:white;
+}
+@keyframes parpadea{
+    50% {border-color:orange;background:gold;}
+}
+.divactres{
+    width: 100%;
+    text-align: right;
+}
+.divactres button{
+    font-size: 0.6em;
+    background: black;
+    color: white;
+}
+#tablaclis tr{
+    border-bottom: 1px solid silver;
+    cursor:pointer;
+}
+#divdepnuevoprod select{
+    height: 10em;
+}
