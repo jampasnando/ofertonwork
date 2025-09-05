@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/', function () {
+Route::get("/","App\Http\Controllers\MarketController@index")->name("index");
+
+Route::get('/sistema', function () {
     return view('usuarios.formuingreso');
 });
 
@@ -67,6 +69,8 @@ Route::get("datatableprod","App\Http\Controllers\DatatableController@inventarioz
 Route::post("filtradopordepot","App\Http\Controllers\DatatableController@filtradopordepot")->name("filtradopordepot");
 Route::post("buscaprodkardex","App\Http\Controllers\InventarioController@buscaprodkardex")->name("buscaprodkardex");
 Route::post("obtienekardexprod","App\Http\Controllers\InventarioController@obtienekardexprod")->name("obtienekardexprod");
+Route::get("indexparavendedor","App\Http\Controllers\InventarioController@indexparavendedor")->name("indexparavendedor");
+
 
 
 Route::get("nuevovendedor","App\Http\Controllers\VendedoreController@create")->name("nuevovendedor");
@@ -100,11 +104,17 @@ Route::get("nuevaventavendedor","App\Http\Controllers\VentaController@createvent
 Route::post("guardanuevaventa","App\Http\Controllers\VentaController@store")->name("guardanuevaventa");
 Route::post("actualizaventa","App\Http\Controllers\VentaController@actualizaventa")->name("actualizaventa");
 Route::post("guardanuevaventavendedor","App\Http\Controllers\VentaController@storeventavendedor")->name("guardanuevaventavendedor");
+Route::post("registraventawebapp","App\Http\Controllers\VentaController@registraventawebapp")->name("registraventawebapp");
+
 // Route::delete("/eliminaventa/{id}","App\Http\Controllers\VentaController@destroy")->name("eliminaventa");
 // Route::get("/editaventa/{id}","App\Http\Controllers\VentaController@edit")->name("editaventa");
-Route::patch("/actualizaventa/{id}","App\Http\Controllers\VentaController@update")->name("actualizaventa");
+Route::patch("/actualizaventa/{id}","App\Http\Controllers\V entaController@update")->name("actualizaventa");
 Route::get("datatableventas","App\Http\Controllers\DatatableController@ventasz")->name("datatablecontrventas");
 Route::get("buscaprod","App\Http\Controllers\VentaController@buscaprod")->name("buscaprod");
+Route::get("buscaprodxapromo","App\Http\Controllers\VentaController@buscaprodxapromo")->name("buscaprodxapromo");
+Route::post("guardaprodenpromo","App\Http\Controllers\MarketController@guardaprodenpromo")->name("guardaprodenpromo");
+Route::post("quitarprodpromo","App\Http\Controllers\MarketController@quitarprodpromo")->name("quitarprodpromo");
+Route::post("obtienepromosdesuc","App\Http\Controllers\MarketController@obtienepromosdesuc")->name("obtienepromosdesuc");
 Route::get("buscaprodxamover","App\Http\Controllers\VentaController@buscaprodxamover")->name("buscaprodxamover");
 Route::get("buscaprodsolosaldos","App\Http\Controllers\VentaController@buscaprodsolosaldos")->name("buscaprodsolosaldos");
 Route::get("buscavendedor","App\Http\Controllers\VentaController@buscavendedor")->name("buscavendedor");
@@ -193,4 +203,16 @@ Route::get("exportarclientes","App\Http\Controllers\ClienteController@exportarcl
 Route::post("verkardex","App\Http\Controllers\VentaController@verkardex")->name("verkardex");
 
 Route::get("tienda","App\Http\Controllers\MarketController@index")->name("tienda");
+Route::get("/tiendaunprod/{id}","App\Http\Controllers\MarketController@indexcliente")->name("tiendacliente");
 Route::post("obtieneproductos","App\Http\Controllers\MarketController@obtieneprodsajax")->name("obtieneproductos");
+Route::post("verificacupon","App\Http\Controllers\CuponController@verificacupon")->name("verificacupon");
+Route::get("listapreventas","App\Http\Controllers\TiendapreventaController@index")->name("listapreventas");
+Route::post("listapreventasmes","App\Http\Controllers\TiendapreventaController@listapreventasmes")->name("listapreventasmes");
+Route::post("guardacarritoprev","App\Http\Controllers\MarketController@guardacarritoprev")->name("guardacarritoprev");
+Route::get("detalleventatienda","App\Http\Controllers\TiendapreventaController@detalleventatienda")->name("detalleventatienda");
+Route::get("configuracion","App\Http\Controllers\TiendapreventaController@configuracion")->name("configuracion");
+Route::post("actualizaconfig","App\Http\Controllers\TiendapreventaController@actualizaconfig")->name("actualizaconfig");
+
+
+Route::post("guardacobro","App\Http\Controllers\CobroController@store")->name("guardacobro");
+Route::post("eliminacobro","App\Http\Controllers\CobroController@eliminacobro")->name("eliminacobro");

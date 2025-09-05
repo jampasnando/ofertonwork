@@ -1,10 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    {{-- <meta property="og:title" content="{{$unprod->descripcion}}" />
+    <meta property="og:description" content="{{$unprod->marca}}" />
+    <meta property="og:image" content="{{url('/images/'.$unprod->imagenes)}}" /> --}}
+    <meta property="og:site_name" content="Ferreteria Oferton">
+    <meta property="og:url" content="https://ferreteriaoferton.com">
+    <meta property="og:title" content="{{$unprod->descripcion}}">
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="{{$unprod->marca}}">
+    {{-- <meta property="og:image" content="{{url('/images/'.$unprod->imagenes)}}">
+    <meta property="og:image:secure_url" content="{{url('/images/'.$unprod->imagenes)}}"> --}}
+    <meta property="og:description" content="Herramientas y mas">
+    <meta property="og:image" content="{{url('/imagenes/icon.png')}}">
+    <meta property="og:image:secure_url" content="{{url('/imagenes/icon.png')}}">
+    {{-- <meta property="fb:app_id" content="932617421869604"> --}}
     @yield('css')
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
@@ -22,14 +36,14 @@
           <div style="display: flex;background:white;" class="px-2 py-3">
             <img src="{{url('/imagenes/logo.svg')}}" alt="" style="height: 2em;">
             <div class="input-group">
-              <select class="form-select" onchange="buscar='';categoria=this.value;porajax();" id="categoria">
+              {{-- <select class="form-select" onchange="buscar='';categoria=this.value;porajax();" id="categoria">
                 <option selected="selected" value='Todas'>Todas las Categorias</option>
                 @foreach ($categorias as $unacat)
                   <option value="{{$unacat->categoria}}">{{$unacat->categoria}}</option>
                 @endforeach
                  
                  
-              </select>
+              </select> --}}
               <input type="text" aria-label="Last name" class="form-control w-45" placeholder="Buscar un producto" onchange="buscador()" id="buscar">
               <button class="input-group-text bg-transparent" type="submit" onclick="buscador();">
                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
@@ -40,7 +54,7 @@
            </div>
            <div class="col-xxl-3 col-lg-4 d-flex align-items-center px-2 ">
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-outline-gray-400 text-muted d-none d-lg-block" data-bs-toggle="modal" data-bs-target="#modalCiudades" style="background:lightgoldenrodyellow;">
+            <button type="button" class="btn btn-outline-gray-400 text-muted " data-bs-toggle="modal" data-bs-target="#modalCiudades" style="background:lightgoldenrodyellow;border: 1px solid gold;font-weight: bold;" id="btnmodalciudades">
               <i data-feather="map-pin" style="height: 1em;"></i>&nbsp;<span id="sucursal">Todas las Sucursales</span>
             </button>
             <div class="list-inline ms-auto d-lg-block d-none">
@@ -112,14 +126,19 @@
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:white;">
                         Inicio
                         </a>
-                        <ul class="dropdown-menu">
+                        <li>
+                          <a class="nav-link" href="#" style="color:white;" data-bs-toggle="modal" data-bs-target="#modalcarrusel">
+                            <span style="color:red;">&#9829;</span> OFERTAS <span style="color:red;">&#9829;</span>
+                            </a>
+                        </li>
+                        {{-- <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="../index.html">Opcion 1</a></li>
                             <li><a class="dropdown-item" href="../pages/index-2.html">Opcion 2</a></li>
                             <li><a class="dropdown-item" href="../pages/index-3.html">Opcion 3</a></li>
                             <li><a class="dropdown-item" href="../pages/index-4.html">Opcion 4 <span class="badge bg-light-info text-dark-info ms-1">New</span></a></li>
-                        </ul>
+                        </ul> --}}
                       </li>
-                      <li class="nav-item dropdown">
+                      {{-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:white;">
                         Comprar
                         </a>
@@ -135,8 +154,8 @@
                             <li><a class="dropdown-item" href="../pages/shop-cart.html">Producto x</a></li>
                             <li><a class="dropdown-item" href="../pages/shop-checkout.html">Producto x</a></li>
                         </ul>
-                      </li>
-                      <li class="nav-item dropdown">
+                      </li> --}}
+                      {{-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:white;">
                         Sucursales
                         </a>
@@ -147,8 +166,8 @@
                             <li><a class="dropdown-item" href="../pages/store-grid.html">La Paz</a></li>
                             <li><a class="dropdown-item" href="../pages/store-single.html">El Alto</a></li>
                         </ul>
-                      </li>
-                      <li class="nav-item dropdown">
+                      </li> --}}
+                      {{-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:white;">
                         Ofertas
                         </a>
@@ -178,14 +197,14 @@
                         <a class="nav-link" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:white;">
                         Cuenta
                         </a>
-                      </li>
+                      </li> --}}
                   </ul>
                 </div>
             </div>
           </div>
           <div class="social" style="display:flex;margin-right: 1em;position: relative;">
-            <div id="divcarrito" data-bs-toggle="modal" data-bs-target="#modalCarrito" onclick="vecarrito()" style="cursor: pointer;display:none;">
-              <div class="carrito">
+            <div id="divcarrito" data-bs-toggle="modal" data-bs-target="#modalCarrito" onclick="vecarrito()" style="cursor: pointer;display:none;" >
+              <div class="carrito carritobrilla">
                 <img src="{{url('/imagenes/carrito.svg')}}" alt="" style="height: 2em;">
               </div>
               <div class="nroitemscarrito" id="nroitemscarrito"></div>
@@ -193,6 +212,7 @@
             <a href="https://www.facebook.com/ElOfertonFerreteriaOnline" target="_blank"><img src="{{url('/imagenes/logoface.png')}}" alt="" style="width: 2.4em;"></a>&nbsp;
             <a href="https://api.whatsapp.com/send?phone=59177939732" target="_blank"><img src="{{url('/imagenes/logowhats.png')}}" alt="" style="width: 2.4em;"></a>
           </div>
+          <div data-bs-toggle="modal" data-bs-target="#modalComprobarcompra" style="cursor: pointer;display:none;" id="btncomprobarcompra">
       </nav>
       </header>
       </div>
@@ -215,7 +235,7 @@
     <div class="footer" style="background:lightgrey;width:100%;height:5em;">
       {{-- @yield("pie"); --}}
       <div >
-        <h1>ESTE ES EL PIE</h1>
+        {{-- <h1>ESTE ES EL PIE</h1> --}}
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>

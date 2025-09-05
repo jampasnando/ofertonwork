@@ -22,17 +22,19 @@ class CierreController extends Controller
     {
         $meses=["","Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
         // return (int)date("m");
-        $mes=$meses[(int)date("m")];
+        $mesx=$meses[(int)date("m")];
+        $mes=(int)date("m");
         $ano=date("Y");
         if(session("usr")->rol!="Enc. Tienda y caja"){
-            $lista=Cierre::orderBy("fecha","desc")->get();
-            return view("ventas.cierres")->with("lista",$lista)->with("mesanox",$mes." ".$ano);
+            $lista=Cierre::whereMonth("fecha",$mes)->whereYear("fecha",$ano)->orderBy("fecha","desc")->get();
+            // return json_encode(["mes"=>$mes,"ano"=>$ano,"lista"=>$lista]);
+            return view("ventas.cierres")->with("lista",$lista)->with("mesanox",$mesx." ".$ano);
         }  
         else{
             $deposito=session("usr")->ciudad;
             $idusr=session("usr")->id;
-            $lista=Cierre::where("deposito",$deposito)->where("idusr",$idusr)->orderBy("fecha","desc")->get();
-            return view("ventas.cierres")->with("lista",$lista)->with("mesanox",$mes." ".$ano);
+            $lista=Cierre::where("deposito",$deposito)->where("idusr",$idusr)->whereMonth("fecha",$mes)->whereYear("fecha",$ano)->orderBy("fecha","desc")->get();
+            return view("ventas.cierres")->with("lista",$lista)->with("mesanox",$mesx." ".$ano);
         }      
     }
     public function listacierres(Request $request)
@@ -43,12 +45,13 @@ class CierreController extends Controller
         $meses=["Enero"=>1,"Febrero"=>2,"Marzo"=>3,"Abril"=>4,"Mayo"=>5,"Junio"=>6,"Julio"=>7,"Agosto"=>8,"Septiembre"=>9,"Octubre"=>10,"Noviembre"=>11,"Diciembre"=>12];
         if(session("usr")->rol!="Enc. Tienda y caja"){
             $lista=Cierre::whereMonth("fecha",$meses[$mes])->whereYear("fecha",$ano)->orderBy("fecha","desc")->get();
+            // return json_encode(["mes"=>$meses[$mes],"ano"=>$ano,"lista"=>$lista]);
             return view("ventas.cierres")->with("lista",$lista)->with("mesanox",$mes." ".$ano);
         }  
         else{
             $deposito=session("usr")->ciudad;
             $idusr=session("usr")->id;
-            $lista=Cierre::where("deposito",$deposito)->where("idusr",$idusr)->orderBy("fecha","desc")->get();
+            $lista=Cierre::where("deposito",$deposito)->where("idusr",$idusr)->whereMonth("fecha",$meses[$mes])->whereYear("fecha",$ano)->orderBy("fecha","desc")->get();
             return view("ventas.cierres")->with("lista",$lista)->with("mesanox",$mes." ".$ano);
         }      
     }

@@ -12,6 +12,7 @@
                     <th>N</th>
                     <th>Descripcion</th>
                     <th>Fecha</th>
+                    <th>Pagado</th>
                     <th>PrecioVenta</th>
                     <th>PrecioFinal</th>
                     <th>Cantidad</th>
@@ -26,6 +27,7 @@
                         <td>{{$loop->iteration}} <input type="hidden" name="id_{{$loop->iteration}}" id="id_{{$loop->iteration}}" value="{{$unprod->id}}"></td>
                         <td>{{$unprod->descripcion}}</td>
                         <td>{{implode("-",array_reverse(explode("-",explode(" ",$unprod->fecha)[0])))." ".explode(" ",$unprod->fecha)[1]}}</td>
+                        <td>{{implode("-",array_reverse(explode("-",explode(" ",$unprod->pagocomision)[0])))." ".explode(" ",$unprod->pagocomision)[1]}}</td>
                         <td>{{$unprod->precioventa}}</td>
                         <td>{{$unprod->preciofinal}}</td>
                         <td>{{$unprod->cuantos}}</td>
@@ -34,7 +36,7 @@
                         {{-- <td><a href="{{route('pagacomision',$unprod->id)}}" class="btn btn-warning">Pagar</a></td> --}}
                     </tr>
                 @endforeach
-                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align:right;font-weight:bold;font-size:1.5em">Total: </td><td id="total" style="font-weight:bold;font-size:1.5em">0</td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align:right;font-weight:bold;font-size:1.5em">Total: </td><td id="total" style="font-weight:bold;font-size:1.5em">0</td></tr>
             </tbody>
         </table>
         {{-- <div>{{$lista->links()}}</div> --}}

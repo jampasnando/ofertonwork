@@ -33,17 +33,77 @@
                         <td></td>
                         @endif
                         <td>{{$unregistro->dias}}</td>
-                        <td><a href="{{route("compras.detdeudas",["proveedor"=>$unregistro->proveedor])}}" class="btn btn-warning">Detalle</a></td>
+                        <td>
+                            <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalpago" onclick="llenapago('{{$unregistro->proveedor}}')">Pago</a>
+                            <a href="{{route("compras.detdeudas",["proveedor"=>$unregistro->proveedor])}}" class="btn btn-warning">Detalle</a>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
+          {{-- ////////////////////////////////////           MODAL PAGO                 ////////////////////////// --}}
+          {{-- <button style="display:none;" id="btnpago" data-bs-toggle="modal" data-bs-target="#modalpago"></button> --}}
+          <div class="modal fade" id="modalpago" tabindex="-1" aria-modal="true" role="dialog">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-body p-8" style="background: #fff6b740;">
+                    <div class="position-absolute top-0 end-0 me-3 mt-3 z-3" style="border: 2px solid red;top: -1.5em !important;border: 2px solid red;right: -1.5em !important;background: white;">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{{route("compras.registrapago")}}" method="post" id="formupago">
+                        @csrf
+                        <div class="input-group mb-3" style="justify-content:center" id="nuevopago">
+                            <div style="color:red;">Pagar a <span id="nombreproveedor" style="font-weight: bold">nombreproveedor</span></div>
+                            <table>
+                                <tr>
+                                    <th>Monto</th>
+                                    <th>TipoPago</th>
+                                    <th>Nro Nota</th>
+                                    <th>Observacion</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="number" class="form-control bg-light" id="monto" name="monto" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                    </td>
+                                    <td>
+                                        <select class="form-select" aria-label="Default select example" id="tipopago" name="tipopago" >
+                                            <option value="contado">Efectivo</option>
+                                            <option value="tarjeta">Tarjeta</option>
+                                            <option value="cheque">Cheque</option>
+                                            <option value="deposito">Depósito</option>
+                                            <option value="transferencia">Transferencia</option>
+                                        </select>
+                                    </td>
+                                    <td style="background: snow">
+                                        <input type="text" class="form-control bg-light" id="nronota" name="nronota" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                    </td>
+                                    <td style="background: snow">
+                                        <input type="text" class="form-control bg-light" id="observacion" name="observacion" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                    </td>
+                                    <td><button class="btn btn-secondary" type="submit">Registrar nuevo pago</button></td>
+                                </tr>
+                            </table>
+                            {{-- <input type="hidden" name="idcompra" name="idcompra" value="{{$compra->idcompra}}">
+                            <input type="hidden" name="id" name="id" value="{{$compra->id}}"> --}}
+                            <input type="hidden" name="proveedor" id="proveedor" value="">
+                        </div>
+                    </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{-- //////////////////////////////////////////////////////////////////////////////////// --}}   
         
 @endsection
 <script>
     window.onload=function(){
         tb=document.getElementById("tb_deudas");
         totaliza();
+    }
+    function llenapago(proveedor){
+        console.log(proveedor);
+        document.getElementById("nombreproveedor").innerText=proveedor;
+        document.getElementById("proveedor").value=proveedor;
     }
     function totaliza(){
         tb=document.getElementById("tb_deudas");

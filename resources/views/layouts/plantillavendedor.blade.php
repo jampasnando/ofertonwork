@@ -44,6 +44,8 @@
           {{-- <li><a class="nav-link navbar-brand" href="{{route('comisionespagadas')}}">Comisiones Pagadas</a></li> --}}
         </ul>
       </div>
+      <a class="nav-link navbar-brand" href="{{route('indexparavendedor')}}">Inventario</a>
+      <a class="nav-link navbar-brand" href="{{route('listapreventas')}}">TiendaOnline</a>
          
           
     </nav>

@@ -396,6 +396,25 @@
         document.getElementById("saldo").value=parseFloat(document.getElementById("total").innerText) - parseFloat(document.getElementById("pago").value);
     }
     function recalculatotalformapago(){
+        // xefectivo=parseFloat(document.getElementById("efectivo").value);
+        // xtarjeta=parseFloat(document.getElementById("tarjeta").value);
+        // xcheque=parseFloat(document.getElementById("cheque").value);
+        // xdepositobancario=parseFloat(document.getElementById("depositobancario").value);
+        // xtransferencia=parseFloat(document.getElementById("transferencia").value);
+        // xqr=parseFloat(document.getElementById("qr").value);
+        
+        // totalformaspago=(xefectivo + xtarjeta + xcheque + xdepositobancario + xtransferencia +xqr).toFixed(2);
+        // document.getElementById("totalformapago").value=totalformaspago;
+        // console.log("totales: ",total, totalformaspago);
+        // if(total==totalformaspago){
+        //     console.log("entra iguales");
+        //     document.getElementById("credito").value=0;
+        // }
+        // else{
+        //     console.log("entra desiguales");
+        //     document.getElementById("credito").value=total-totalformaspago;
+        // }
+        // xcredito=parseFloat(document.getElementById("credito").value);
         xefectivo=parseFloat(document.getElementById("efectivo").value);
         xtarjeta=parseFloat(document.getElementById("tarjeta").value);
         xcheque=parseFloat(document.getElementById("cheque").value);
@@ -408,18 +427,17 @@
         console.log("totales: ",total, totalformaspago);
         if(total==totalformaspago){
             console.log("entra iguales");
-            // document.getElementById("divformaspago").style.background="lightblue";
+            document.getElementById("divformaspago").style.background="lightblue";
             document.getElementById("credito").value=0;
-            // document.getElementById("divcredito").style.display="none";
+            document.getElementById("divcredito").style.display="none";
         }
         else{
             console.log("entra desiguales");
-            // document.getElementById("divformaspago").style.background="orangered";
+            document.getElementById("divformaspago").style.background="orangered";
             document.getElementById("credito").value=total-totalformaspago;
-            // document.getElementById("divcredito").style.display="";
+            document.getElementById("divcredito").style.display="";
         }
         xcredito=parseFloat(document.getElementById("credito").value);
-
     }
 </script>
 @endsection

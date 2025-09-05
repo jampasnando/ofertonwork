@@ -21,7 +21,7 @@
                
             </div>
         @endif
-    <h4 class="card-header">Registrar Venta</h4> <br>  
+    <h4 class="card-header">Registrar Venta</h4> <br>
     <div class="reservas">
         <div class="titres"><h5>Reservas</h5></div>
         <table id="tbreservas">
@@ -130,6 +130,10 @@
                       <div class="input-group mb-1">
                         <span class="input-group-text" id="inputGroup-sizing-sm" >*Telefono</span>
                         <input type="text" class="form-control" aria-label="Sizing example input" id="telefono" aria-describedby="inputGroup-sizing-sm" required title="REQUERIDO" readonly>
+                      </div>
+                      <div class="input-group mb-1">
+                        <span class="input-group-text" id="inputGroup-sizing-sm" >*Rubro</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="rubro" aria-describedby="inputGroup-sizing-sm" required title="REQUERIDO" readonly>
                       </div>
                       <div class="input-group mb-1">
                         <span class="input-group-text" id="inputGroup-sizing-sm" >NIT</span>
@@ -292,6 +296,20 @@
                 <input type="text" class="form-control" aria-label="Sizing example input" id="nuevonit" aria-describedby="inputGroup-sizing-sm"  required title="REQUERIDO">
             </div>
             <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Rubro</span>
+                <select class="form-select" aria-label="Default select example" id="nuevorubro" style="background: aliceblue">
+                    <option value="">--Elije una opción--</option>
+                    <option value="Carpinteria madera aluminio">Carpinteria madera aluminio </option>
+                    <option value="⁠Cerrajería o Soldador">⁠Cerrajería o Soldador </option>
+                    <option value="⁠Hobby">⁠Hobby </option>
+                    <option value="⁠Construcción">⁠Construcción </option>
+                    <option value="⁠Jardinería">⁠Jardinería</option>
+                    <option value="Agronomía">Agronomía</option>
+                    <option value="⁠Mecánica ">⁠Mecánica </option>
+                    <option value="⁠otros">⁠otros</option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
                 <span class="input-group-text" id="inputGroup-sizing-sm" >Dirección</span>
                 <input type="text" class="form-control" aria-label="Sizing example input" id="nuevadir" aria-describedby="inputGroup-sizing-sm"  required title="REQUERIDO">
             </div>
@@ -318,25 +336,25 @@
         return ((this.getHours() < 10)?"0":"") + this.getHours() + ((this.getMinutes() < 10)?"0":"") + this.getMinutes() + ((this.getSeconds() < 10)?"0":"") + this.getSeconds();
     }
     window.onload=function(){
-        // $("#fechax").datepicker({
-        //                 changeMonth: true,
-        //                 changeYear: true,
-        //                 dateFormat:"dd-mm-yy",
-        //                 closeText: 'Cerrar',
-        //                 prevText: '<Ant',
-        //                 nextText: 'Sig>',
-        //                 currentText: 'Hoy',
-        //                 monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-        //                 monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-        //                 dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-        //                 dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
-        //                 dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
-        //                 weekHeader: 'Sm',
-        //                 firstDay: 1,
-        //                 isRTL: false,
-        //                 showMonthAfterYear: false,
-        //                 yearSuffix: ''
-        // });
+        $("#fechax").datepicker({
+                        changeMonth: true,
+                        changeYear: true,
+                        dateFormat:"dd-mm-yy",
+                        closeText: 'Cerrar',
+                        prevText: '<Ant',
+                        nextText: 'Sig>',
+                        currentText: 'Hoy',
+                        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+                        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+                        weekHeader: 'Sm',
+                        firstDay: 1,
+                        isRTL: false,
+                        showMonthAfterYear: false,
+                        yearSuffix: ''
+        });
         var modalalerta = document.getElementById('alertarebaja');
     }
     window.addEventListener("load",function(){
@@ -554,34 +572,40 @@
         
     }
     function elegido(id,descr,precioventa,preciolocal,comision,cantidad,idprod){
-        console.log(id,descr,idprod);
-        tabla=document.getElementById("detalleventa");
-        nro=tabla.rows.length;
-        fila=tabla.insertRow();
-        fila.title="Quedan "+cantidad+ " unidades";
-        celda=fila.insertCell();
-        celda.innerHTML="<span style='color:red;cursor:pointer' onclick='elimina(this)'>X</span>&nbsp" + nro+"<input type='hidden' value='"+id+"' name='id_"+nro+"' id='id_"+nro+"'>";
-        celda=fila.insertCell();
-        celda.innerHTML=descr + "<input type='hidden' value='"+preciolocal+"' name='pc_"+nro+"' id='pc_"+nro+"'>";
-        if(parseFloat(cantidad)<=0){
-            celda.style.color="red";
+        if(cantidad<=0){
+            alert("NO HAY STOCK DE ESTE PRODUCTO en el Inventario");
         }
-        celda=fila.insertCell();
-        celda.style.width="9em";
-        celda.innerHTML="<input type='number' value='"+precioventa+"' name='pfinal_"+nro+"' id='pfinal_"+nro+"' onchange='cambiacant(this)'  class='form-control' style='text-align:right'>";
-        celda=fila.insertCell();
-        celda.style.width="7em";
-        celda.innerHTML="<input type='number' value='1' name='c_"+nro+"' id='c_"+nro+"' onchange='cambiacant(this)'  class='form-control' style='text-align:center'>";
-        celda=fila.insertCell();
-        celda.style.textAlign="right";
-        celda.innerText=precioventa;
-        celda=fila.insertCell();
-        celda.innerHTML="<input type='hidden' value='"+precioventa+"' name='pv_"+nro+"' id='pv_"+nro+"'><input type='hidden' value='"+comision+"' name='com_"+nro+"' id='com_"+nro+"'><input type='hidden' value='"+idprod+"'>";
-        document.getElementById("resultadobusq").innerHTML="";
-        document.getElementById("texto").value="";
-        document.getElementById("texto").focus();
-        calculatotal();
-        revisareservado(idprod);
+        else{
+            console.log(id,descr,idprod);
+            tabla=document.getElementById("detalleventa");
+            nro=tabla.rows.length;
+            fila=tabla.insertRow();
+            fila.title="Quedan "+cantidad+ " unidades";
+            celda=fila.insertCell();
+            celda.innerHTML="<span style='color:red;cursor:pointer' onclick='elimina(this)'>X</span>&nbsp" + nro+"<input type='hidden' value='"+id+"' name='id_"+nro+"' id='id_"+nro+"'><div id='stock_"+nro+"' style='display:none;'>"+cantidad+"</div>";
+            celda=fila.insertCell();
+            celda.innerHTML=descr + "<input type='hidden' value='"+preciolocal+"' name='pc_"+nro+"' id='pc_"+nro+"'>";
+            if(parseFloat(cantidad)<=0){
+                celda.style.color="red";
+            }
+            celda=fila.insertCell();
+            celda.style.width="9em";
+            celda.innerHTML="<input type='number' value='"+precioventa+"' name='pfinal_"+nro+"' id='pfinal_"+nro+"' onchange='cambiacant(this,1)'  class='form-control' style='text-align:right'>";
+            celda=fila.insertCell();
+            celda.style.width="7em";
+            celda.innerHTML="<input type='number' value='"+(cantidad>0?'1':'0')+"' name='c_"+nro+"' id='c_"+nro+"' onchange='cambiacant(this,0)'  class='form-control' style='text-align:center'>";
+            celda=fila.insertCell();
+            celda.style.textAlign="right";
+            celda.innerText=cantidad>0?precioventa:0;
+            celda=fila.insertCell();
+            celda.innerHTML="<input type='hidden' value='"+precioventa+"' name='pv_"+nro+"' id='pv_"+nro+"'><input type='hidden' value='"+comision+"' name='com_"+nro+"' id='com_"+nro+"'><input type='hidden' value='"+idprod+"'>";
+            document.getElementById("resultadobusq").innerHTML="";
+            document.getElementById("texto").value="";
+            document.getElementById("texto").focus();
+            calculatotal();
+            revisareservado(idprod);
+
+        }
     }
     function elimina(prod){
         fila=prod.parentElement.parentElement.rowIndex;
@@ -607,13 +631,25 @@
 
     }
     msgporcentaje10=false;
-    function cambiacant(input){
-        celda=input.parentElement;
-        fila=celda.parentElement;
-        fila.cells[4].innerText=fila.cells[2].querySelector("input").value * fila.cells[3].querySelector("input").value ;
-        console.log("nuevacant: ",input.value);
-        calculatotal();
-        revisarebajas();
+    function cambiacant(input,opcion){
+        stock=fila.cells[0].querySelector("div").innerText;
+        console.log("stock en cambiacant: ",stock);
+        if(opcion==0 && (input.value*1)>stock){
+            alert("Esta cantidad sobrepasa el stock disponible de: "+stock+ " unidades");
+            input.value=stock<=0?0:1;
+            fila.cells[4].innerText=fila.cells[2].querySelector("input").value * fila.cells[3].querySelector("input").value ;
+            calculatotal();
+            revisarebajas();
+        }
+        else{
+            celda=input.parentElement;
+            fila=celda.parentElement;
+            fila.cells[4].innerText=fila.cells[2].querySelector("input").value * fila.cells[3].querySelector("input").value ;
+            console.log("nuevacant: ",input.value);
+            calculatotal();
+            revisarebajas();
+        }
+        
     }
     function revisarebajas(){
         msgporcentaje10=false;
@@ -744,6 +780,8 @@
                         celdacli=filacli.insertCell();
                         celdacli.innerText=uncli.id;
                         celdacli.style="display:none;";
+                        celdacli=filacli.insertCell();
+                        celdacli.innerText=uncli.rubro;
                         filacli.onclick=function(){eligecli(this);};
 
                     });
@@ -761,6 +799,7 @@
         document.getElementById("cliente").value=elegido.cells[0].innerText;
         document.getElementById("telefono").value=elegido.cells[1].innerText;
         document.getElementById("nit").value=elegido.cells[2].innerText;
+        document.getElementById("rubro").value=elegido.cells[4].innerText;
     }
     function guardanuevocli(){
         console.log("guardará nuevocli");
@@ -768,8 +807,9 @@
         nuevotelf=document.getElementById("nuevotelf").value;
         nuevonit=document.getElementById("nuevonit").value;
         nuevadir=document.getElementById("nuevadir").value;
-        if(nuevocli!="" && nuevotelf!="" && nuevonit!="" && nuevadir!=""){
-            nuevito=[{nombre:nuevocli,telefono:nuevotelf,nit:nuevonit,direccion:nuevadir}];
+        nuevorubro=document.getElementById("nuevorubro").value;
+        if(nuevocli!="" && nuevotelf!="" && nuevonit!="" && nuevadir!="" && nuevorubro!=""){
+            nuevito=[{nombre:nuevocli,telefono:nuevotelf,nit:nuevonit,direccion:nuevadir,rubro:nuevorubro}];
             fetch('guardanuevocliente2', {
             method: 'post',
             headers: {
@@ -789,7 +829,7 @@
                 document.getElementById("cliente").value=res.nombre;
                 document.getElementById("telefono").value=res.telefono;
                 document.getElementById("nit").value=res.nit;
-                
+                document.getElementById("rubro").value=res.rubro;
             });
         }
         else{

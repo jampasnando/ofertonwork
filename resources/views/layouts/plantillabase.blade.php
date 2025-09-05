@@ -12,6 +12,13 @@
     <title>FERRETERIA</title>
   </head>
   <body>
+    @php
+      $usr = session("usr");
+      $rol = session("rol");  
+      if($rol != "admin"){
+        return redirect('usuarios.formuingreso')->with('error', 'No tienes acceso a esta sección.');
+      }
+    @endphp
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       {{-- <a class="nav-link active navbar-brand" aria-current="page" href="{{route('inventario.index')}}">Inventario</a> --}}
       <div class="salirdevendedor" style="position: absolute;right:1em">{{session("usr")->nombre}} | <a href="./" class="btn">Salir</a></div>
@@ -84,6 +91,8 @@
           <li><a class="nav-link navbar-brand" href="{{route('historialqueries')}}">Historial Cambios</a></li>
         </ul>
       </div>
+      <a class="nav-link navbar-brand" href="{{route('configuracion')}}">Configuración</a>
+
     </nav>
     <link rel="stylesheet" href="{{asset('css/misvistas.css').'?'.time()}}">
     <div class="container-fluid">

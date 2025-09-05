@@ -59,12 +59,12 @@ class CompraController extends Controller
         unset($compra[0]["credito"]);
         $idcompra=uniqid();
         $compra[0]["idcompra"]=$idcompra;
+
         $compra[0]["fecha"]=$hoy;
         $compra[0]["comprador"]=$compra[0]["idusr"];
         $proveedor=$compra[0]["proveedor"];
         Compra::insert($compra);
         foreach ($detalle as $undet) {
-           
             $unprod=Inventario::findOrFail($undet["idprod"]);
             $unprod->cantidad=$unprod->cantidad + $undet["cuantos"];
             $unprod->preciolocal=$undet["preciolocal"];
@@ -78,8 +78,11 @@ class CompraController extends Controller
             Detallecompra::insert($undet);
         }
         if($credito!=""){
+            $credito["idcompra"]=$idcompra;
             $credito["proveedor"]=$proveedor;
             $credito["fecha"]=$hoy;
+            $credito["nronota"]="";
+            $credito["respaldos"]="";
             Pago::insert($credito);
         }
         return $compra;    
@@ -138,16 +141,20 @@ class CompraController extends Controller
     public function registrapago(Request $request){
         $unpago=$request->except(["_token","_method"]);
         $unpago["fecha"]=date("Y-m-d H:i:s");
-        unset($unpago["id"]);
+        $unpago["idcompra"]="-";
+        $unpago["deuda"]=0;
+        $unpago["respaldos"]="";
+        // unset($unpago["id"]);
         Pago::insert($unpago);
-        $idcompra=$unpago["idcompra"];
+        // $idcompra=$unpago["idcompra"];
 
-        return $this->detalleunacompra($request);
-
+        // return $this->detalleunacompra($request);
+        return back();
     }
     public function indexcreditos(){
         // $lista=DB::select("select tb1.*,pagado,ultfecha,dias from (select proveedor,round(sum(total),2) as acumulado from compras where formapago='credito' group by proveedor) as tb1 left join (select proveedor,round(sum(monto),2) as pagado,max(fecha) as ultfecha, datediff(now(),max(pagos.fecha)) as dias from pagos group by proveedor) as tb2 on tb1.proveedor=tb2.proveedor");
         $lista=DB::select("select proveedor,round(sum(total),2) as total,round(sum(pagado),2) as pagado,max(ultfecha) as ultfecha,min(dias) as dias from (select proveedor,total,pagado,ultfecha,dias from (select * from compras where formapago='credito') as tb1 left join (select idcompra,round(sum(monto),2) as pagado,max(fecha) as ultfecha, datediff(now(),max(pagos.fecha)) as dias from pagos group by idcompra) as tb2 on tb1.idcompra=tb2.idcompra) as tb3 group by proveedor");
+
         return view("compras.indexcreditos")->with("lista",$lista);
     }
     public function comprasdetdeudas(Request $request){

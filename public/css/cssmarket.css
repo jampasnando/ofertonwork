@@ -71,7 +71,12 @@
     padding: 1em 0;
     background: white;
     width: 18em;
+    position: relative;
 }
 .app{
 
+}
+.comprobante{
+    color:limegreen;
+    font-weight: bold;
 }

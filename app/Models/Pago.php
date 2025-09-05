@@ -9,6 +9,6 @@ class Pago extends Model
 {
     use HasFactory;
     public $timestamps=false;
-    protected $fillable=['idcompra','monto','tipopago','fecha','observacion'];
+    protected $fillable=['idcompra','monto','tipopago','fecha','observacion','proveedor','nronota','respaldos'];
 
 }

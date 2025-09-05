@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Tiendapreventa;
+use App\Models\Promo;
 
 use Illuminate\Http\Request;
 use DB;
@@ -18,7 +20,25 @@ class MarketController extends Controller
         $prods=DB::select("SELECT * from inventarios where imagenes<>'' and cantidad>0 limit 15");
         $categorias=DB::select("select distinct categoria from inventarios where imagenes<>'' and cantidad>0 order by categoria");
         $marcas=DB::select("select marca,count(*) as cant from inventarios where imagenes<>'' and cantidad>0 group by marca order by cant desc  ");
-        return view("market.index")->with("prods",$prods)->with("marcas",$marcas)->with("categorias",$categorias);
+        $config=DB::select("select * from configapp");
+
+        return view("market.index")->with("prods",$prods)->with("marcas",$marcas)->with("categorias",$categorias)->with("config",$config);
+    }
+    public function indexcliente(Request $request,$id)
+    {
+        // $datos=$request->input();
+        $datos=json_decode(base64_decode($id));
+        // return json_encode($datos);
+        $unprod=DB::select("SELECT * from inventarios where id='".$datos->id."'");
+        $vendedor=DB::select("select id,nombre,telefono from vendedores where id='".$datos->vendedor."'");
+        $config=DB::select("select * from configapp");
+        $paraencriptar=["id"=>$unprod[0]->id,"vendedor"=>$vendedor[0]->id];
+        $encriptado=base64_encode(json_encode($paraencriptar));
+        // return json_encode($unprod[0]);
+        $prods=DB::select("SELECT * from inventarios where imagenes<>'' and cantidad>0 limit 15");
+        $categorias=DB::select("select distinct categoria from inventarios where imagenes<>'' and cantidad>0 order by categoria");
+        $marcas=DB::select("select marca,count(*) as cant from inventarios where imagenes<>'' and cantidad>0 group by marca order by cant desc  ");
+        return view("market.index")->with("prods",$prods)->with("marcas",$marcas)->with("categorias",$categorias)->with("unprod",$unprod)->with("vendedor",$vendedor)->with("encriptado",$encriptado)->with("config",$config);
     }
     public function obtieneprodsajax(Request $request){
         $entrada=$request->input();
@@ -33,6 +53,33 @@ class MarketController extends Controller
         $query="SELECT * from inventarios where imagenes<>'' and cantidad>0 and ".implode(" and ",$filtros)." limit $limiteinf,15";
         $prods=DB::select($query);
         return json_encode($prods);
+    }
+    public function guardacarritoprev(Request $request){
+        // $datos=$request->input();
+        // return json_encode("hola");s
+        $datos=$request->all();
+        // return $datos[0];
+        $guardara=["json"=>json_encode($request->all()),"cliente"=>$datos[0]['cliente'],"celular"=>$datos[0]['celular'],"metodopago"=>$datos[0]['metodopago'],"deposito"=>$datos[0]["deposito"],"origen"=>$datos[0]["origen"],"fecha_creacion"=>date("Y-m-d H:i:s"),"estado"=>"pendiente"];
+        $nuevo=Tiendapreventa::create($guardara);
+        return $nuevo;
+    }
+
+    public function guardaprodenpromo(Request $request){
+        // return $request;
+        $hoy=date("Y-m-d H:i:s");
+        $guardar=["deposito"=>$request->deposito,"producto"=>$request->id,"fechareg"=>$hoy];
+        Promo::insert($guardar);
+        return back();
+    }
+    public function quitarprodpromo(Request $request){
+        // return $request;
+        Promo::where("producto",$request->idquitar)->delete();
+        return back();
+    }
+    public function obtienepromosdesuc(Request $request){
+        // return $request;
+        $promos=DB::select("select inventarios.* from (select * from promos where deposito='".$request->suc."') as tb1 inner join inventarios where tb1.producto=inventarios.id");
+        return $promos;
     }
     /**
      * Show the form for creating a new resource.

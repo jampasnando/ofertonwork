@@ -118,7 +118,7 @@
             <span class="input-group-text" id="inputGroup-sizing-sm">Pendiente por pagar:</span>
             <input type="text" readonly class="form-control bg-light" id="pendiente" style="font-weight: bolder;color:tomato;font-size:1.5em">
         </div>
-        <div><button class="btn btn-secondary" onclick="nuevopago()">Nuevo Pago</button></div>
+        {{-- <div><button class="btn btn-secondary" onclick="nuevopago()">Nuevo Pago</button></div>
         <form action="{{route("compras.registrapago")}}" method="post" id="formupago">
             @csrf
         <div class="input-group mb-3" style="display: none;justify-content:center" id="nuevopago">
@@ -126,17 +126,14 @@
                 <table>
                     <tr>
                         <th>Monto</th>
-                        {{-- <th>Fecha</th> --}}
                         <th>TipoPago</th>
+                        <th>Nro Nota</th>
                         <th>Observacion</th>
                     </tr>
                     <tr>
                         <td>
                             <input type="number" class="form-control bg-light" id="monto" name="monto" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                         </td>
-                        {{-- <td>
-                            <input type="text" class="form-control bg-light" id="fecha" name="fecha" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                        </td> --}}
                         <td>
                             <select class="form-select" aria-label="Default select example" id="tipopago" name="tipopago" >
                                 <option value="contado">Efectivo</option>
@@ -145,6 +142,9 @@
                                 <option value="deposito">Depósito</option>
                                 <option value="transferencia">Transferencia</option>
                             </select>
+                        </td>
+                        <td style="background: snow">
+                            <input type="text" class="form-control bg-light" id="nronota" name="nronota" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                         </td>
                         <td style="background: snow">
                             <input type="text" class="form-control bg-light" id="observacion" name="observacion" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
@@ -156,7 +156,7 @@
                 <input type="hidden" name="id" name="id" value="{{$compra->id}}">
                 <input type="hidden" name="proveedor" value="{{$compra->proveedor}}}">
         </div>
-        </form>
+        </form> --}}
         
 @endsection
 @section('js')

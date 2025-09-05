@@ -110,11 +110,11 @@
                         <tr>
                             <td>
                               <span class="input-group-text" id="inputGroup-sizing-sm">A cuenta</span>
-                              <input type="number" class="form-control" id="monto" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="0">
+                              <input type="number" class="form-control" id="monto" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="0" onkeyup="recalculadeuda()" onchange="recalculadeuda()">
                             </td>
                             <td>
-                              <span class="input-group-text" id="inputGroup-sizing-sm">TipoPago</span>
-                              <select class="form-select" aria-label="Default select example" id="tipopago" >
+                              <span class="input-group-text" id="inputGroup-sizing-sm" >TipoPago</span>
+                              <select class="form-select" aria-label="Default select example" id="tipopago" onchange="recalculadeuda()">
                                   <option value="contado">Efectivo</option>
                                   <option value="tarjeta">Tarjeta</option>
                                   <option value="cheque">Cheque</option>
@@ -122,10 +122,10 @@
                                   <option value="transferencia">Transferencia</option>
                               </select>
                             </td>
-                            <td>
+                            {{-- <td>
                               <span class="input-group-text" id="inputGroup-sizing-sm">Observación</span>
-                              <input type="text" class="form-control" id="observacion" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                            </td>
+                              <input type="text" class="form-control" id="observacion" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" style="width: 25em;">
+                            </td> --}}
                         </tr>
                     </table>
               </div>
@@ -160,6 +160,12 @@
             }
         });
     });
+    function recalculadeuda(){
+        montox=document.getElementById("monto").value;
+        totalx=document.getElementById("total").value;
+        console.log("montox y totalx: ",montox,totalx);
+        document.getElementById("comentario").value="Bs."+montox+" a cuenta ("+document.getElementById("tipopago").value + ") y Bs."+(totalx - montox) + " a la deuda";
+    }
     function guardacompra(btn){
         btn.disabled=true;
         tabla=document.getElementById("detallecompra");
@@ -176,7 +182,8 @@
             }
             credito="";
             if(document.getElementById("formapago").value=="credito"){
-                credito={monto:document.getElementById("monto").value,tipopago:document.getElementById("tipopago").value,observacion:document.getElementById("observacion").value}
+                deuda=totalx - montox;
+                credito={deuda:deuda,monto:0,tipopago:"-",observacion:document.getElementById("comentario").value}
             }
             
             dataenvio=[{proveedor:document.getElementById("proveedor").value,nit:document.getElementById("nit").value,detalle:prods,total:document.getElementById("total").value,idusr:document.getElementById("id_usr").value,formapago:document.getElementById("formapago").value,factura:document.getElementById("factura").value, comentario:document.getElementById("comentario").value,idneg:document.getElementById("deposito").value,credito:credito}];
@@ -220,7 +227,7 @@
         celda.innerHTML=descr;
         fila.title="Actualmente #"+cantidad;
         celda=fila.insertCell();
-        celda.innerHTML="<input type='number' value='"+preciolocal+"' name='pc_"+nro+"' id='pc_"+nro+"'  class='form-control' style='text-align:right'>";
+        celda.innerHTML="<input type='number' value='"+preciolocal+"' name='pc_"+nro+"' id='pc_"+nro+"'  class='form-control' style='text-align:right' onchange='cambiacant(this)' onkeyup='cambiacant(this)'>";
         celda=fila.insertCell();
         celda.style.width="9em";
         celda.innerHTML="<input type='number' value='"+precioventa+"' name='pfinal_"+nro+"' id='pfinal_"+nro+"' onchange='cambiacant(this)'  class='form-control' style='text-align:right'>";
@@ -263,6 +270,9 @@
         fila.cells[6].innerText=(fila.cells[2].querySelector("input").value * fila.cells[5].querySelector("input").value).toFixed(2);
         console.log("nuevacant: ",input.value);
         calculatotal();
+        if(document.getElementById("formapago").value=="credito"){
+            recalculadeuda();
+        }
     }
     function calculatotal(){
         total=0;
@@ -292,9 +302,11 @@
         formap=document.getElementById("formapago").value;
         if(formap=="credito"){
             document.getElementById("divcredito").style="background: lightsteelblue;display:flex;justify-content:center;";
+            recalculadeuda();
         }
         else{
             document.getElementById("divcredito").style.display="none";
+            document.getElementById("comentario").value="";
         }
     }
 </script>

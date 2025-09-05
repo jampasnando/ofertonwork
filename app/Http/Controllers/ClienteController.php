@@ -29,7 +29,8 @@ class ClienteController extends Controller
         // ->select('clientes.*',DB::raw('count(clientes.id) as cant'))
         // ->leftJoin('ventas','clientes.id','=','ventas.idcliente')
         // ->groupBy(['clientes.id','clientes.nombre','clientes.telefono','clientes.nit','clientes.direccion']);
-        $lista=DB::select("select clientes.*,count(*) as cant from clientes left join ventas on clientes.id=ventas.idcliente group by clientes.id,clientes.nombre,clientes.telefono,clientes.nit,clientes.direccion");
+        // $lista=DB::select("select clientes.*,count(*) as cant from clientes left join ventas on clientes.id=ventas.idcliente group by clientes.id,clientes.nombre,clientes.telefono,clientes.nit,clientes.direccion,clientes.rubro");
+        $lista=DB::select("select clientes.*,sum(if(ventas.id is null,0,1)) as cant from clientes left join ventas on clientes.id=ventas.idcliente group by clientes.id,clientes.nombre,clientes.telefono,clientes.nit,clientes.direccion,clientes.rubro order by cant desc");
         // return DataTables::queryBuilder($lista)
         return DataTables::of($lista)
         ->addColumn("action",function($uncli){
@@ -96,6 +97,7 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // return request();
         $datos=request()->except(["_token","_method"]);
         // return $datos;
         Cliente::where("id",$id)->update($datos);
@@ -116,7 +118,7 @@ class ClienteController extends Controller
     public function buscacliente(Request $request){
         $datos=$request->input();
         $texto=$datos[0]["texto"];
-        $listaclis=DB::select("select * from clientes where nombre like '$texto%' or nit like '$texto%' order by nombre");
+        $listaclis=DB::select("select * from clientes where nombre like '$texto%' or nit like '$texto%' or telefono like '$texto%' order by nombre");
         return $listaclis;
     }
     public function guardanuevocliente2(Request $request){

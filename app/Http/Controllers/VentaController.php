@@ -10,6 +10,9 @@ use App\Models\Detalleventa;
 use App\Models\Deposito;
 use App\Models\Cierre;
 use App\Models\Bitacora;
+use App\Models\Cobro;
+use App\Models\Tiendapreventa;
+
 use DB;
 use App\Exports\VentasExport;
 use App\Exports\VentasRangofechas;
@@ -36,6 +39,17 @@ class VentaController extends Controller
             ->orWhere("descripcion","like","%".$txt."%");
         })->take(15)->get();
         return view("ventas.buscados")->with("resbusq",$resbusq);
+    }
+    public function buscaprodxapromo(Request $request){
+        $txt=$request->texto;
+        // $resbusq=Inventario::select("id","descripcion","cantidad","precioventa","preciolocal","comision","idprod")->where("idprod","like",$request->texto."%")->where("deposito","=",$request->dep)->take(10)->get();
+        $resbusq=Inventario::select("id","descripcion","cantidad","precioventa","preciolocal","comision","idprod","imagenes")
+        ->where("deposito","=",$request->dep)
+        ->where(function($query) use ($txt){
+            $query->where("idprod","like",$txt."%")
+            ->orWhere("descripcion","like","%".$txt."%");
+        })->take(15)->get();
+        return view("ventas.buscadosxapromo")->with("resbusq",$resbusq);
     }
     public function buscaprodxamover(Request $request){
         $txt=$request->texto;
@@ -162,6 +176,59 @@ class VentaController extends Controller
        
         return $venta;
     }
+    public function registraventawebapp(Request $request)
+    {
+        $venta=$request->input();
+        $detalle=$venta[0]["detalleventa"];
+        $idprev=$venta[0]["idprev"];
+        unset($venta[0]["detalleventa"]);
+        unset($venta[0]["idprev"]);
+        $idventa=uniqid();
+        $venta[0]["idventa"]=$idventa;
+        if($venta[0]["fecha"]==""){
+            $venta[0]["fecha"]=date("Y-m-d H:i:s");
+        }
+        else{
+            $fechax= $venta[0]['fecha'];
+            $venta[0]['fecha']=implode("-",array_reverse(explode("-",$fechax)));
+        }
+        if($venta[0]["formapago"]!="mixto"){
+            $venta[0]["pagomixto"]=null;
+        }
+        
+        $resventa=Venta::insert($venta);
+        $lapreventa=Tiendapreventa::findOrFail($idprev);
+        $lapreventa->estado="vendido";
+        $lapreventa->save();
+        $hoy=date("Y-m-d H:i:s");
+        $usuario=session("usr");
+        $bitacora=["fecha"=>$hoy,"usuario"=>$usuario,"motivo"=>"venta","query"=>json_encode($venta),"ventaEncCaja"];
+        Bitacora::create($bitacora);
+        foreach ($detalle as $undet) {
+            $undet["idventa"]=$idventa;
+            Detalleventa::insert($undet);
+            $bitacora=["fecha"=>$hoy,"usuario"=>$usuario,"motivo"=>"detalleventa","query"=>json_encode($undet),"obs"=>"cuantos"];
+            Bitacora::create($bitacora);
+            try {
+                //code...
+                $unprod=Inventario::findOrFail($undet["idprod"]);
+                $bitacora=["fecha"=>$hoy,"usuario"=>$usuario,"motivo"=>"detalleventa","query"=>json_encode($unprod),"obs"=>"antes"];
+                Bitacora::create($bitacora);
+                $unprod->cantidad=$unprod->cantidad - $undet["cuantos"];
+                $unprod->save();
+                
+                $bitacora=["fecha"=>$hoy,"usuario"=>$usuario,"motivo"=>"detalleventa","query"=>json_encode($unprod),"obs"=>"despues"];
+                Bitacora::create($bitacora);
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+            
+           
+        }
+       
+        // return $venta;
+        return json_encode("registrado");
+    }
     // public function storecajachica(Request $request)
     // {
     //     $caja=$request->input();
@@ -240,7 +307,9 @@ class VentaController extends Controller
             if($fecha==""){
                 $fecha=date("Y-m-d");
             }
-            $detalle=DB::select("select tb3.*,inventarios.proveedor,inventarios.idprod from (select detalleventas.id,detalleventas.idprod,detalleventas.preciolocal,detalleventas.precioventa,detalleventas.preciofinal,detalleventas.cuantos,detalleventas.descripcion,detalleventas.cierre,tb2.idneg,tb2.cliente,tb2.telefono,tb2.formapago,tb2.fecha,tb2.nombre,tb2.idventa,tb2.total,tb2.pago,tb2.saldo,tb2.pagomixto  from (select tb1.*,vendedores.nombre from (select idventa,idneg,cliente,telefono,formapago,fecha,vendedor,total,pago,saldo,pagomixto from ventas  where fecha like '$fecha%') as tb1 left join vendedores on tb1.vendedor=vendedores.id) as tb2 inner join detalleventas on tb2.idventa=detalleventas.idventa) as tb3 inner join inventarios on tb3.idprod=inventarios.id order by fecha desc");
+            // $detalle=DB::select("select tb3.*,inventarios.proveedor,inventarios.idprod from (select detalleventas.id,detalleventas.idprod,detalleventas.preciolocal,detalleventas.precioventa,detalleventas.preciofinal,detalleventas.cuantos,detalleventas.descripcion,detalleventas.cierre,tb2.idneg,tb2.cliente,tb2.telefono,tb2.formapago,tb2.fecha,tb2.nombre,tb2.idventa,tb2.total,tb2.pago,tb2.saldo,tb2.pagomixto  from (select tb1.*,vendedores.nombre from (select idventa,idneg,cliente,telefono,formapago,fecha,vendedor,total,pago,saldo,pagomixto from ventas  where fecha like '$fecha%') as tb1 left join vendedores on tb1.vendedor=vendedores.id) as tb2 inner join detalleventas on tb2.idventa=detalleventas.idventa) as tb3 inner join inventarios on tb3.idprod=inventarios.id order by fecha desc");
+            $detalle=DB::select("select tb3.*,inventarios.proveedor,inventarios.idprod from (select detalleventas.id,detalleventas.idprod,detalleventas.preciolocal,detalleventas.precioventa,detalleventas.preciofinal,detalleventas.cuantos,detalleventas.descripcion,detalleventas.cierre,tb2.idneg,tb2.cliente,tb2.telefono,tb2.formapago,tb2.fecha,tb2.nombre,tb2.idventa,tb2.total,tb2.pago,tb2.saldo,tb2.pagomixto  from (select tb1.*,vendedores.nombre from (select idventa,idneg,cliente,telefono,formapago,fecha,vendedor,total,pago,saldo,pagomixto from ventas  where fecha like '$fecha%') as tb1 left join vendedores on tb1.vendedor=vendedores.id) as tb2 inner join detalleventas on tb2.idventa=detalleventas.idventa) as tb3 left join inventarios on tb3.idprod=inventarios.id order by fecha desc");
+
             return view("ventas.ventasdetallado")->with("detalle",$detalle)->with("fecha",$fecha)->with("vendedores",$vendedores);
     
         }
@@ -417,11 +486,17 @@ class VentaController extends Controller
         $idcli=$request->idcli;
         $cliente=Cliente::where("id",$idcli)->get();
         $nombrecli=$cliente[0]->nombre;
+        // $cobros=DB::select("select id,monto,formapago,fechareg,comentario,monto,monto,idusr from cobros where idcliente='$idcli'")->toArray();
+        $cobros=DB::table(DB::raw('(SELECT *,id as idcobro,concat("C-",comentario) as comentariox FROM `cobros` where idcliente='.$idcli.') as tb1'))
+        ->select('idcobro','monto','formapago','fechareg','comentariox','monto','monto','nombre')
+        ->join('vendedores','tb1.idusr','=','vendedores.id');
         $ventas=DB::table(DB::raw('(SELECT * FROM `ventas` where idcliente='.$idcli.') as tb1'))
         ->select('idventa','total','formapago','fecha','comentario','pago','saldo','nombre')
         ->join('vendedores','tb1.idusr','=','vendedores.id')
+        ->union($cobros)
+        ->orderBy("fecha",'asc')
         ->get();
-        return view("ventas.verkardex")->with("ventas",$ventas)->with("nombrecli",$nombrecli);
+        return view("ventas.verkardex")->with("ventas",$ventas)->with("nombrecli",$nombrecli)->with("idcli",$idcli);
     }
     public function historialqueries(Request $request){
         $mesano=explode(" ",$request->mesano);
@@ -440,4 +515,9 @@ class VentaController extends Controller
         $lista=Bitacora::whereMonth("fecha",$mes)->whereYear("fecha",$ano)->orderBy("fecha","desc")->get();
         return view("ventas.historialqueries")->with("lista",$lista)->with("mesanox",$mes." ".$ano);
     }
+
+    public function listapreventas(Request $request){
+
+    }
+
 }

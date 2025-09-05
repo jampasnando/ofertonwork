@@ -30,7 +30,11 @@ class InventarioController extends Controller
         $depositos=Deposito::all();
             return view("inventario.index")->with("depositos",$depositos);
     }
-
+    public function indexparavendedor()
+    {
+        $depositos=Deposito::all();
+            return view("inventario.indexparavendedor")->with("depositos",$depositos);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -138,15 +142,20 @@ class InventarioController extends Controller
         if($chktodos){
             $datos=request()->except(["_token","_method","todos","deposito","idprodoriginal","cantidad"]);
             Inventario::where("idprod","=",$idprodoriginal)->update($datos);
-            $obs="para idprod=".$idprodoriginal;
+            $obs="para idprod en todos los depositos: ".$idprodoriginal;
             $bitacora=["fecha"=>$hoy,"usuario"=>$usuario,"motivo"=>"editar","query"=>json_encode($datos),"obs"=>$obs];
             Bitacora::create($bitacora);
             return back()->with("prodmodificado","Producto Modificado en TODOS LOS DEPÓSITOS");
         } 
         else {
+            $antes=Inventario::find($id);
+            $obs="Antes para id=".$id;
+            $bitacora=["fecha"=>$hoy,"usuario"=>$usuario,"motivo"=>"editar","query"=>json_encode($antes),"obs"=>$obs];
+            Bitacora::create($bitacora);
+
             $datos=request()->except(["_token","_method","todos","idprodoriginal"]);
             Inventario::where("id","=",$id)->update($datos);
-            $obs="para id=".$id;
+            $obs="Despues para id=".$id;
             $bitacora=["fecha"=>$hoy,"usuario"=>$usuario,"motivo"=>"editar","query"=>json_encode($datos),"obs"=>$obs];
             Bitacora::create($bitacora);
             return back()->with("prodmodificado","Producto Modificado");
