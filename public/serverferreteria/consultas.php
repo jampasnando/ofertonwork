@@ -44,7 +44,6 @@ $estructura=array (
     $fields = json_encode ( $estructura);
 $url="https://fcm.googleapis.com/fcm/send";
     $headers = array (
-            'Authorization: key=' . "AAAA_2IKHXo:APA91bFo4BIO8PfmLyABh4hfLYS6arSC6JFn3dpfzKUwIUTXDPMRR19NWsD13qWAqs37TShx2BXuRg3nn0oANz0yf_FV37zujQYoL73MZsGG_rvDEmMZfqdiIOXFAeBCKm649sVZVMJc",
             'Content-Type: application/json'
     );
 
