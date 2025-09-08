@@ -38,7 +38,7 @@ $url="https://fcm.googleapis.com/fcm/send";
   		'to' => $negtoken,
 	);
      $headers = array (
-            'Authorization: key=' . "AAAANZDDjKI:APA91bGPcEZJ84ewDNhxXujbe41ycT6YeMR1e1GvhaBZb5KsvWwyoi73fgtNsLa21-QXCkapNgYBwIYVQyX2P73xP_PRBHGtANnYwX-WaSer4ZEINVxkbdkF_LWaNYozVjWUQKoygROF",
+            
             'Content-Type: application/json'
     );
     
